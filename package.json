@@ -3,26 +3,44 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.0.0",
+    "@craco/craco": "^6.4.3",
+    "@mui/icons-material": "^5.5.1",
+    "@mui/material": "^5.5.1",
+    "@mui/styled-engine": "^5.4.4",
+    "@mui/styled-engine-sc": "^5.4.2",
     "@reduxjs/toolkit": "^1.8.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "@types/axios": "^0.14.0",
     "@types/jest": "^24.9.1",
     "@types/node": "^12.20.47",
-    "@types/react": "^16.14.24",
+    "@types/react": "^17.0.41",
     "@types/react-dom": "^16.9.14",
     "@types/react-redux": "^7.1.23",
+    "@types/uuid": "^8.3.4",
+    "axios": "^0.26.1",
+    "font-awesome": "^4.7.0",
+    "global": "^4.4.0",
+    "prettier": "^2.6.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-hook-form": "^7.28.1",
     "react-redux": "^7.2.6",
+    "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
-    "typescript": "~4.1.5"
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^6.0.0",
+    "sass": "^1.49.9",
+    "typescript": "~4.1.5",
+    "uuid": "^8.3.2"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "start": "yarn run craco start",
+    "build": "yarn run craco build",
+    "test": "yarn run craco test",
+    "eject": "yarn run craco eject"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,7 +58,13 @@
     ]
   },
   "devDependencies": {
-    "react-app-rewire-alias": "^1.1.7",
-    "react-app-rewired": "^2.2.1"
-  }
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.8.1",
+    "@types/redux-logger": "^3.0.9",
+    "@typescript-eslint/parser": "^5.15.0",
+    "craco-alias": "^3.0.1"
+  },
+  "main": "index.js",
+  "author": "PaulMardling83 <paul.mardling@bestseller.com>",
+  "license": "MIT"
 }
