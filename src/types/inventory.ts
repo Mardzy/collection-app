@@ -1,7 +1,7 @@
 import { Card, RequestStatus } from ".";
 
 /**
- * Collection Types
+ * Inventory Types
  */
 
 export interface CollectionCard extends Card {
@@ -13,13 +13,11 @@ export interface CollectionCard extends Card {
   manufacturer?: string;
   productName?: string;
   year?: string | number;
-  status?:
-    | "for trade"
-    | "for sale"
-    | "exited collection"
-    | "personal collection";
+  status?: "for trade" | "for sale" | "exited inventory" | "personal inventory";
+  id: string | number;
+  owner: string;
 }
 
-export interface Collection extends RequestStatus {
-  collection: CollectionCard[] | [];
+export interface Inventory extends RequestStatus {
+  items: CollectionCard[];
 }

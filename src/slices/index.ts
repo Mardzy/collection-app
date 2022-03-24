@@ -1,11 +1,16 @@
-import collectionReducer from "./collection";
-import collectionItemReducer from "./activeItem";
+import activeItem from "./activeItem";
+import collectionItem from "./inventoryItem";
+import inventory from "./inventory";
+import users from "./user";
 
-export const reducer = {
-  collection: collectionReducer,
-  activeItem: collectionItemReducer,
+export const rootReducer = {
+  activeItem,
+  inventory,
+  collectionItem,
+  users
 };
 
-// export type RootState = ReturnType<typeof reducer>
-export * from "./collection";
 export * from "./activeItem";
+export * from "./inventoryItem";
+export * from "./inventory";
+export * from "./user";

@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "id": "c8a57299-82ea-4b35-be52-31d1eaa5f4b2",
+      "email": "liam.walters@example.com",
+      "gender": "male",
+      "phone_number": "0438-376-652",
+      "birthdate": 826530877,
+      "location": {
+        "street": "9156 dogwood ave",
+        "city": "devonport",
+        "state": "australian capital territory",
+        "country": "Australia",
+        "postcode": 7374
+      },
+      "username": "bigTiger964",
+      "password": "training",
+      "first_name": "liam",
+      "last_name": "walters",
+      "title": "mr",
+      "picture": "men/50.jpg"
+    },
+    {
+      "id": "73429be6-2f69-4961-b7c0-c35b51169aaf",
+      "email": "jon.walters@example.com",
+      "gender": "male",
+      "phone_number": "0438-376-652",
+      "birthdate": 826530877,
+      "location": {
+        "street": "9156 dogwood ave",
+        "city": "devonport",
+        "state": "australian capital territory",
+        "country": "Australia",
+        "postcode": 7374
+      },
+      "username": "biglion964",
+      "password": "training",
+      "first_name": "jon",
+      "last_name": "walters",
+      "title": "mr",
+      "picture": "men/50.jpg"
+    }
+  ]
+}

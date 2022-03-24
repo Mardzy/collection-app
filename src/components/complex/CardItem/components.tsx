@@ -11,7 +11,9 @@ interface LinkToCollectionItemProps extends CollectionCard {
 
 export const LinkToCollectionItem: FC<LinkToCollectionItemProps> = (props) => (
   <LinkWithState
-    to={routes.collectionItem.to.replace(":id", props.id as string)}
+    to={routes.collectionItem.to
+      .replace(":userId", props.owner as string)
+      .replace(":id", props.id as string)}
     state={{ collectionItem: props }}
   >
     {props.children}

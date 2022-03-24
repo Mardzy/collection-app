@@ -12,9 +12,7 @@
       "teamName": "Avalanche",
       "rookie": "Rookie",
       "serialNumbered": 100,
-      "cardThickness": 20,
-      "owner": "me",
-      "id": "123453"
+      "cardThickness": 20
     },
     {
       "genre": "hockey",
@@ -28,9 +26,7 @@
       "teamName": "Avalanche",
       "rookie": "Rookie",
       "serialNumbered": 100,
-      "cardThickness": 20,
-      "owner": "me",
-      "id": "123463"
+      "cardThickness": 20
     },
     {
       "genre": "hockey",
@@ -44,9 +40,7 @@
       "teamName": "Avalanche",
       "rookie": "Rookie",
       "serialNumbered": 100,
-      "cardThickness": 20,
-      "owner": "me",
-      "id": "123473"
+      "cardThickness": 20
     },
     {
       "genre": "hockey",
@@ -60,9 +54,7 @@
       "teamName": "Avalanche",
       "rookie": "Rookie",
       "serialNumbered": 100,
-      "cardThickness": 20,
-      "owner": "me",
-      "id": "123483"
+      "cardThickness": 20
     },
     {
       "genre": "hockey",
@@ -76,9 +68,7 @@
       "teamName": "Avalanche",
       "rookie": "Rookie",
       "serialNumbered": 100,
-      "cardThickness": 20,
-      "owner": "me",
-      "id": "123493"
+      "cardThickness": 20
     },
     {
       "genre": "hockey",
@@ -92,9 +82,7 @@
       "teamName": "Avalanche",
       "rookie": "Rookie",
       "serialNumbered": 100,
-      "cardThickness": 20,
-      "owner": "me",
-      "id": "12345"
+      "cardThickness": 20
     },
     {
       "genre": "hockey",
@@ -108,9 +96,7 @@
       "teamName": "Avalanche",
       "rookie": "Rookie",
       "serialNumbered": 100,
-      "cardThickness": 20,
-      "owner": "me",
-      "id": "12346"
+      "cardThickness": 20
     },
     {
       "genre": "hockey",
@@ -124,9 +110,7 @@
       "teamName": "Avalanche",
       "rookie": "Rookie",
       "serialNumbered": 100,
-      "cardThickness": 20,
-      "owner": "me",
-      "id": "12347"
+      "cardThickness": 20
     },
     {
       "genre": "hockey",
@@ -140,9 +124,7 @@
       "teamName": "Avalanche",
       "rookie": "Rookie",
       "serialNumbered": 100,
-      "cardThickness": 20,
-      "owner": "me",
-      "id": "12348"
+      "cardThickness": 20
     },
     {
       "genre": "hockey",
@@ -156,9 +138,7 @@
       "teamName": "Avalanche",
       "rookie": "Rookie",
       "serialNumbered": 100,
-      "cardThickness": 20,
-      "owner": "me",
-      "id": "12349"
+      "cardThickness": 20
     }
   ]
 }

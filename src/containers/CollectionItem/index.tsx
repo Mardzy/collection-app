@@ -1,23 +1,24 @@
 import React, { FC, useEffect } from "react";
 import { connect } from "react-redux";
-import { Params, useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Typography } from "@mui/material";
 
 import { CardItem, Flex } from "@components";
 
-import { getActiveItem } from "@slices";
+import { getInventoryItem } from "@slices";
 import { RootState } from "@store";
 
-import { CollectionCard, CollectionItem as CollectionItemType } from "@types";
-interface LocationProps {
-  state: {
-    collectionItem: CollectionCard;
-  };
-}
+import {
+  ActiveItem,
+  CollectionCard,
+  InventoryItem as CollectionItemType
+} from "@types";
+import { useAppDispatch } from "../../hooks";
+import { getActiveItemSelector } from "../../selectors";
 
 interface CollectionItemProps {
-  getActiveItem: (userId: { id: string; userId: string }) => void;
-  data: CollectionItemType;
+  activeItem: ActiveItem;
+  collectionItem: CollectionItemType;
 }
 
 /**
@@ -25,44 +26,44 @@ interface CollectionItemProps {
  * @todo create back button
  * @constructor
  */
-const CollectionItem: FC<CollectionItemProps> = ({ data, getActiveItem }) => {
-  const { item, status, error } = data;
-  // const  {
-  //   state: { collectionItem },
-  // } = useLocation() as LocationProps;
-  const location = useLocation() as LocationProps;
-  const { id } = useParams() as Readonly<Params>;
-  // if !collectionItem, use selector to get collection item from redux store
-  // if no redux store get item from db
-  console.log(error);
+const CollectionItem: FC<CollectionItemProps> = ({
+  activeItem: { id },
+  collectionItem
+}) => {
+  const { item } = collectionItem;
+  const params = useParams() as Readonly<{ itemId: string }>;
+  const dispatch = useAppDispatch();
+  const collectionCard: CollectionCard | undefined = getActiveItemSelector(id);
+  const viewItem: CollectionCard = item || collectionCard;
+
   useEffect(() => {
-    if (status === "idle" && !!id) {
-      getActiveItem({
-        userId: "me",
-        id,
-      });
+    if (!item.id) {
+      dispatch(getInventoryItem(params.itemId));
     }
-  }, [location.state.collectionItem]);
+  }, []);
 
   return (
-    <Flex
-      alignItems="center"
-      justifyContent="flex-start"
-      width="100%"
-      flexDirection="column"
-    >
-      <Typography variant="h4">Collection Item</Typography>
-      <CardItem {...item} />
-    </Flex>
+    <>
+      {!!viewItem?.id ? (
+        <Flex
+          alignItems="center"
+          justifyContent="flex-start"
+          width="100%"
+          flexDirection="column"
+        >
+          <Typography variant="h4">Collection Item</Typography>
+          <CardItem {...viewItem} />
+        </Flex>
+      ) : (
+        <div>Loading...</div>
+      )}
+    </>
   );
 };
 
-const mapStateToProps = ({ activeItem }: RootState) => ({
-  data: activeItem,
+const mapStateToProps = ({ activeItem, collectionItem }: RootState) => ({
+  activeItem,
+  collectionItem
 });
 
-const mapDispatchToProps = {
-  getActiveItem,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CollectionItem);
+export default connect(mapStateToProps)(CollectionItem);

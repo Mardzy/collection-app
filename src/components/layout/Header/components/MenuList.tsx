@@ -5,13 +5,13 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
+  ListItemText
 } from "@mui/material";
 import {
   Apps as CollectionIcon,
   AddCircle as AddCircleIcon,
   Mail as MailIcon,
-  MoveToInbox as InboxIcon,
+  MoveToInbox as InboxIcon
   // Storefront as StorefrontIcon,
 } from "@mui/icons-material";
 
@@ -52,12 +52,21 @@ const MenuList: FC<MenuListProps> = ({ closeDrawer }) => (
       {/*  <StorefrontIcon />*/}
       {/*</MenuListItem>*/}
       <MenuListItem
-        to="/collection/add-item"
+        to={routes.addToCollection.to.replace(
+          ":userId",
+          "c8a57299-82ea-4b35-be52-31d1eaa5f4b2"
+        )}
         title={routes.addToCollection.title}
       >
         <AddCircleIcon />
       </MenuListItem>
-      <MenuListItem to={routes.collection.to} title={routes.collection.title}>
+      <MenuListItem
+        to={routes.collection.to.replace(
+          ":userId",
+          "c8a57299-82ea-4b35-be52-31d1eaa5f4b2"
+        )}
+        title={routes.collection.title}
+      >
         <CollectionIcon />
       </MenuListItem>
     </List>

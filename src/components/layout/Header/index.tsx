@@ -1,11 +1,11 @@
-import React from "react";
+import React, { FC, useState } from "react";
 import {
   Box,
   Button,
   IconButton,
   SwipeableDrawer,
   Typography,
-  Toolbar,
+  Toolbar
 } from "@mui/material";
 import { Cancel as CancelIcon, Menu as MenuIcon } from "@mui/icons-material";
 
@@ -24,12 +24,9 @@ interface Props {
   children?: React.ReactElement | undefined;
 }
 
-const Header = (props: Props) => {
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
+const Header: FC<Props> = (props) => {
+  const [state, setState] = useState<{ right: boolean }>({
+    right: false
   });
 
   return (

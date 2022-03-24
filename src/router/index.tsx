@@ -5,22 +5,21 @@ import { AddToCollection, Collection, CollectionItem, Home } from "@containers";
 
 export const routes = {
   home: { to: "/", title: "Home" },
-  addToCollection: { to: "/collection/add-item", title: "Add to Collection" },
-  collectionItem: { to: "/collection/:id", title: "View Item" },
-  collection: { to: "/collection", title: "View Collection" },
+  addToCollection: {
+    to: "collection/:userId/add-item",
+    title: "Add to Inventory"
+  },
+  collectionItem: { to: "item/:id", title: "View Item" },
+  collection: { to: "collection/:userId", title: "View Collection" },
+  marketplace: { to: "marketplace", title: "View Marketplace" }
 };
 
 const Router = () => (
   <Routes>
-    <Route path="/">
-      <Route index element={<Home />} />
-      <Route path="collection">
-        <Route index element={<Collection />} />
-        <Route path=":id" element={<Collection />} />
-        <Route path=":id/item/:itemId" element={<CollectionItem />} />
-        <Route path=":/id/item/add" element={<AddToCollection />} />
-      </Route>
-    </Route>
+    <Route path="/" element={<Home />} />
+    <Route path="collection/:id" element={<Collection />} />
+    <Route path="collection/:id/add-item" element={<AddToCollection />} />
+    <Route path="collection/:id/item/:itemId" element={<CollectionItem />} />
   </Routes>
 );
 

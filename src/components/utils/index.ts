@@ -1,20 +1,20 @@
 import { KeyboardEvent, MouseEvent } from "react";
 
-export const toggleDrawer =
-  (
-    open: boolean,
-    state: { right: boolean },
-    setState: (arg0: any) => void
-  ) =>
-  (event: KeyboardEvent | MouseEvent) => {
-    if (
-      event &&
-      event.type === "keydown" &&
-      ((event as KeyboardEvent).key === "Tab" ||
-        (event as KeyboardEvent).key === "Shift")
-    ) {
-      return;
-    }
+type ToggleDrawerState = { right: boolean };
 
-    setState({ ...state, right: open });
-  };
+export const toggleDrawer = (
+  open: boolean,
+  state: ToggleDrawerState,
+  setState: (arg: ToggleDrawerState) => void
+) => (event: KeyboardEvent | MouseEvent) => {
+  if (
+    event &&
+    event.type === "keydown" &&
+    ((event as KeyboardEvent).key === "Tab" ||
+      (event as KeyboardEvent).key === "Shift")
+  ) {
+    return;
+  }
+
+  setState({ ...state, right: open });
+};
