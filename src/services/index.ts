@@ -1,13 +1,6 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+export const DELETE = "DELETE";
+export const PATCH = "PATCH";
+export const POST = "POST";
+export const PUT = "PUT";
 
-const BASE_URL = "BURL";
-const CARD_DB_URL = "CDBURL";
-
-export const baseAPI: AxiosInstance = axios.create({
-  timeout: 1000,
-  baseURL: BASE_URL,
-});
-
-export const cardDBAPI: AxiosInstance = axios.create({
-  baseURL: CARD_DB_URL,
-});
+export * from "./users";

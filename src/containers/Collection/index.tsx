@@ -12,7 +12,6 @@ import { useAppDispatch } from "../../hooks";
 
 interface CollectionProps {
   inventory: CollectionType;
-  getInventory: (userId: string) => void;
 }
 
 const Collection: FC<CollectionProps> = ({ inventory: { items } }) => {
@@ -59,8 +58,4 @@ const mapStateToProps = ({ inventory }: RootState) => ({
   inventory
 });
 
-const mapDispatchToProps = {
-  getInventory
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Collection);
+export default connect(mapStateToProps)(Collection);

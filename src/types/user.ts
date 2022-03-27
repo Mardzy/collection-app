@@ -24,5 +24,5 @@ export interface User {
 }
 
 export interface UserProps extends RequestStatus {
-  user: User;
+  data: User;
 }

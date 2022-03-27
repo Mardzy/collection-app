@@ -3,16 +3,17 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Typography,
+  Typography
 } from "@mui/material";
 import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
 
 interface FilterItemProps {
   details: ReactElement | string;
   title: string;
+  handleClick?: () => void | undefined;
 }
 
-const FilterItem: FC<FilterItemProps> = ({ title, details }) => {
+const FilterItem: FC<FilterItemProps> = ({ title, details, handleClick }) => {
   const [expanded, setExpanded] = useState<string | false>(false);
 
   const handleChange = (panel: string) => (
@@ -26,6 +27,7 @@ const FilterItem: FC<FilterItemProps> = ({ title, details }) => {
     <Accordion
       expanded={expanded === "panel1"}
       onChange={handleChange("panel1")}
+      onClick={!expanded ? handleClick : () => false}
       sx={{ width: "100%" }}
     >
       <AccordionSummary

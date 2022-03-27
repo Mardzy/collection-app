@@ -9,6 +9,7 @@
       "@pages/*": ["./pages/*"],
       "@router/*": ["./router/*"],
       "@services/*": ["./services/*"],
+      "@selectors/*": ["./selectors/*"],
       "@slices/*": ["./slices/*"],
       "@store/*": ["./store/*"],
       "@styles/*": ["./styles/*"],

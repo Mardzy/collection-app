@@ -33,13 +33,8 @@ export const getInventoryItem = createAsyncThunk(
   async (id: string, { rejectWithValue }) => {
     try {
       // console.log("args: ", userId);
-      const item = inventoryItems.find((item) => {
-        console.log("here", id, item.id);
-        if (item.id === id) {
-          return item;
-        }
-      });
-      console.log("item", item, id);
+      const item = inventoryItems.find((item) => item.id === id);
+
       return item as CollectionCard;
     } catch (err) {
       console.log("Error: ", err);

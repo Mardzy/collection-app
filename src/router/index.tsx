@@ -7,7 +7,7 @@ export const routes = {
   home: { to: "/", title: "Home" },
   addToCollection: {
     to: "collection/:userId/add-item",
-    title: "Add to Inventory"
+    title: "Add to Collection"
   },
   collectionItem: { to: "item/:id", title: "View Item" },
   collection: { to: "collection/:userId", title: "View Collection" },

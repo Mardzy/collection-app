@@ -6,30 +6,27 @@ import {
 } from "@reduxjs/toolkit";
 
 import { users } from "./mocks";
-// import { createUniqueId } from "./utils";
 
 import { Status, User, UserProps } from "@types";
 
 const initialState: UserProps = {
   error: "",
   status: Status["IDLE"],
-  user: ({} as unknown) as User
+  data: ({} as unknown) as User
 };
 
 const clearUser: CaseReducer<UserProps> = (state) => {
   state.status = Status["IDLE"];
-  state.user = ({} as unknown) as User;
+  state.data = ({} as unknown) as User;
 };
 
 const getUser = createAsyncThunk(
-  "users/getUser",
+  "user/getUser",
   async (userId: string, { rejectWithValue }) => {
     try {
-      // console.log("args: ", userId);
       const response: User[] = await JSON.parse(JSON.stringify(users));
-      // replace with fetch user get request
-      console.log("response: ", response);
-      return response.find(({ id }: User) => id === userId) as User;
+      const activeUser = response.find(({ id }) => id === userId);
+      return activeUser;
     } catch (err) {
       rejectWithValue((err as Error).message);
     }
@@ -37,7 +34,7 @@ const getUser = createAsyncThunk(
 );
 
 const updateUser = createAsyncThunk(
-  "users/updateInventoryItem",
+  "user/updateInventoryItem",
   async (user: User, { rejectWithValue }) => {
     try {
       console.log("Update users Item", user);
@@ -49,7 +46,7 @@ const updateUser = createAsyncThunk(
 );
 
 export const addUser = createAsyncThunk(
-  "users/addInventoryItem",
+  "user/addInventoryItem",
   async (user: User, { rejectWithValue }) => {
     try {
       console.log("Update users Item", user);
@@ -61,7 +58,7 @@ export const addUser = createAsyncThunk(
 );
 
 export const removeUser = createAsyncThunk(
-  "users/removeUser",
+  "user/removeUser",
   async (id: string, { rejectWithValue }) => {
     try {
       console.log("Update users Item", id);
@@ -85,10 +82,10 @@ export const userSlice = createSlice({
     },
     [getUser.fulfilled.type]: (
       state: UserProps,
-      { payload }: PayloadAction<User>
+      action: PayloadAction<User>
     ) => {
       state.status = Status["FULFILLED"];
-      state.user = payload;
+      state.data = action.payload;
     },
     [getUser.rejected.type]: (state, payload) => {
       state.status = Status["REJECTED"];

@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "es6",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -20,22 +16,22 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "./src",
-      "paths": {
-        "@assets":["assets"],
-        "@components":["components"],
-        "@containers":["containers"],
-        "@pages":["pages"],
-        "@router":["router"],
-        "@services":["services"],
-        "@slices":["slices"],
-        "@store":["store"],
-        "@styles":["styles"],
-        "@theme":["theme"],
-        "@types":["types"],
-        "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
+    "paths": {
+      "@assets": ["assets"],
+      "@components": ["components"],
+      "@containers": ["containers"],
+      "@hooks": ["hooks"],
+      "@pages": ["pages"],
+      "@router": ["router"],
+      "@services": ["services"],
+      "@selectors": ["selectors"],
+      "@slices": ["slices"],
+      "@store": ["store"],
+      "@styles": ["styles"],
+      "@theme": ["theme"],
+      "@types": ["types"],
+      "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
     }
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }
