@@ -37,7 +37,8 @@ const FilterItem: FC<FilterItemProps> = ({ title, details, handleClick }) => {
       >
         <Typography align="center">{title}</Typography>
       </AccordionSummary>
-      <AccordionDetails>{details}</AccordionDetails>
+
+      <AccordionDetails>{details && details}</AccordionDetails>
     </Accordion>
   );
 };

@@ -14,14 +14,8 @@ export const getDBItemsByKeyAndValue = ({
   value
 }: {
   key: keyof Card;
-  value: string;
+  value: string | number;
 }) =>
   useAppSelector(({ productDB }) =>
-    productDB.items.filter((item) => {
-      console.log("item: ", item[key]);
-      if (item[key] === value) {
-        console.log("here");
-        return item[key] === value;
-      }
-    })
-  ) as Card[];
+    productDB.items.filter((item) => item[key] === value)
+  );

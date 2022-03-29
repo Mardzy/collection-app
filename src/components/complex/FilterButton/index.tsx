@@ -3,11 +3,11 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { Button, SwipeableDrawer } from "@mui/material";
 
 import { toggleDrawer } from "components/utils";
-import { FilterList, Flex } from "components";
+import { Flex } from "components";
 
 const FilterButton: FC = () => {
   const [state, setState] = useState<{ right: boolean }>({
-    right: false,
+    right: false
   });
 
   return (
@@ -18,7 +18,7 @@ const FilterButton: FC = () => {
           left: "90%",
           top: "2%",
           marginTop: "10px",
-          backgroundColor: "black",
+          backgroundColor: "black"
         }}
         variant="contained"
         endIcon={<FilterListIcon />}
@@ -32,9 +32,7 @@ const FilterButton: FC = () => {
         onClose={toggleDrawer(false, state, setState)}
         onOpen={toggleDrawer(true, state, setState)}
       >
-        <Flex width={300}>
-          <FilterList />
-        </Flex>
+        <Flex width={300}>I am a list</Flex>
       </SwipeableDrawer>
     </>
   );

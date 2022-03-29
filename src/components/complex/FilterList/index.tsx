@@ -1,51 +1,56 @@
-import React from "react";
+import React, { FC, ReactText } from "react";
 import { Box, Button, Typography } from "@mui/material";
+import _ from "lodash";
 
-import { FilterItem } from "./components";
+import { FilterItem } from "@components";
 
-import { useAppDispatch } from "@hooks";
-import { getDBItemsPropListSelector } from "@selectors";
 import { setUniqueCardPropList } from "@slices";
-
 import { Card } from "@types";
+import { useAppDispatch } from "@hooks";
 
-const FilterList = () => {
+export interface FilterItemProps {
+  key: keyof Card;
+  filterItemsList: string[] | undefined;
+}
+
+interface FilterListProps {
+  filterItems: FilterItemProps[];
+  handleFilterItemClick: (prop: keyof Card) => void;
+}
+
+const FilterList: FC<FilterListProps> = ({
+  filterItems,
+  handleFilterItemClick
+}) => {
   const dispatch = useAppDispatch();
-  const yearsList = getDBItemsPropListSelector("years") as string[];
-
-  const handleFilterItemClick = (prop: keyof Card) => {
-    console.log("click", prop);
-    dispatch(setUniqueCardPropList(prop));
-  };
 
   return (
     <Box mt={5} width={1}>
       <Typography width={1}>Filters</Typography>
-      <FilterItem
-        details={
-          <>
-            {yearsList &&
-              yearsList.map((year: string, i: number) => {
-                return (
+      {filterItems?.map(
+        ({ key, filterItemsList }: FilterItemProps, index: number) => (
+          <FilterItem
+            key={index}
+            details={
+              <>
+                {filterItemsList?.map((value: ReactText, i: number) => (
                   <Button
                     variant="text"
                     key={i}
-                    onClick={() => {
-                      console.log(year, "click");
-                    }}
+                    onClick={() => handleFilterItemClick(value as keyof Card)}
                   >
-                    {year}
+                    {value}
                   </Button>
-                );
-              })}
-          </>
-        }
-        handleClick={() => handleFilterItemClick("year")}
-        title="Year"
-      />
-      <FilterItem details="product details" title="Products" />
-      <FilterItem details="insert details" title="Insert" />
-      <FilterItem details="team details" title="Team" />
+                ))}
+              </>
+            }
+            handleClick={() => {
+              dispatch(setUniqueCardPropList(key));
+            }}
+            title={_.startCase(_.camelCase(key)) as string}
+          />
+        )
+      )}
     </Box>
   );
 };

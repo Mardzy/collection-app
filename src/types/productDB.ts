@@ -8,12 +8,12 @@ export interface ProductDB extends RequestStatus {
   rookies?: string[];
   autos?: string[];
   memorabilia?: string[];
-  serialNumbered?: string[] | number[];
+  serialNumbered?: string[];
   setNames?: string[];
   cardThicknesses?: number[];
   odds?: string[];
   genres?: string[];
   manufacturers?: string[];
   productNames?: string[];
-  years?: string[] | number[];
+  years?: string[];
 }

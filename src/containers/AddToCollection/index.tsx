@@ -1,54 +1,80 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
-  Box,
-  Button,
   FormControl,
   Grid,
   IconButton,
   InputAdornment,
   Paper,
-  TextField,
-  Typography
+  TextField
 } from "@mui/material";
 import { Search as SearchIcon } from "@mui/icons-material";
 
-import { CardItem, Flex, PageTitle } from "@components";
-import { connect } from "react-redux";
-import { RootState } from "@store";
-import { useAppDispatch } from "@hooks";
-import { getDBItems, setUniqueCardPropList } from "@slices";
-import { FilterItem } from "../../components/complex/FilterList/components";
 import {
-  getDBItemsByKeyAndValue,
-  getDBItemsPropListSelector
-} from "@selectors";
-import { Card, CollectionCard } from "@types";
-// import { getDBItemsByKeyAndValue } from "@selectors";
+  CardItem,
+  FilterItemProps,
+  FilterList,
+  Flex,
+  PageTitle
+} from "@components";
+
+import { RootState } from "@store";
+import { getDBItems, setUniqueCardPropList } from "@slices";
+import { Card, CollectionCard, ProductDB } from "@types";
+import { useAppDispatch } from "@hooks";
+import { getDBItemsByKeyAndValue } from "@selectors";
 
 interface SearchProps {
   search: string;
   event?: Event;
 }
 
-const AddToCollection = () => {
-  const dispatch = useAppDispatch();
-  const yearsList = getDBItemsPropListSelector("years") as string[];
+interface AddToCollectionProps {
+  productDB: ProductDB;
+}
 
-  const handleFilterItemClick = (prop: keyof Card) => {
-    console.log("click", prop);
-    dispatch(setUniqueCardPropList(prop));
-  };
+const AddToCollection: FC<AddToCollectionProps> = ({ productDB }) => {
+  const { years, manufacturers, productNames, setNames, teamNames } = productDB;
+  const dispatch = useAppDispatch();
+  const filterItems: FilterItemProps[] = [
+    {
+      key: "year",
+      filterItemsList: years
+    },
+    {
+      key: "productName",
+      filterItemsList: productNames
+    },
+    {
+      key: "teamName",
+      filterItemsList: teamNames
+    },
+    {
+      key: "setName",
+      filterItemsList: setNames
+    },
+    {
+      key: "manufacturer",
+      filterItemsList: manufacturers
+    }
+  ];
+
+  const [activeFilters, setActiveFilters] = useState<string[]>([]);
 
   const { control, handleSubmit } = useForm<SearchProps>();
-
   const [, setSearchValue] = useState<string>("");
   const [filterProps, setFilterProps] = useState<{
     key: keyof Card;
-    value: string;
-  }>({ key: "year", value: "" });
+    value: string | number;
+  }>({ key: "" as keyof Card, value: "" });
   const filterResults = getDBItemsByKeyAndValue(filterProps);
-  console.log(filterResults);
+
+  const handleFilterItemClick = (key: keyof Card) => {
+    console.log("key", key);
+    dispatch(setUniqueCardPropList(key as keyof Card));
+  };
+
   // const [, setExpanded] = useState<string | false>(false);
 
   // const handleChange =
@@ -74,6 +100,8 @@ const AddToCollection = () => {
   useEffect(() => {
     dispatch(getDBItems());
   }, []);
+
+  // console.log("activeFilters: ", activeFilters);
 
   return (
     <Flex
@@ -120,34 +148,10 @@ const AddToCollection = () => {
             )}
           />
         </FormControl>
-        <Box mt={5} width={1}>
-          <Typography width={1}>Filters</Typography>
-          <FilterItem
-            details={
-              <>
-                {yearsList &&
-                  yearsList.map((year: string, i: number) => {
-                    return (
-                      <Button
-                        variant="text"
-                        key={i}
-                        onClick={() => {
-                          setFilterProps({ key: "year", value: year });
-                        }}
-                      >
-                        {year}
-                      </Button>
-                    );
-                  })}
-              </>
-            }
-            handleClick={() => handleFilterItemClick("year")}
-            title="Year"
-          />
-          <FilterItem details="product details" title="Products" />
-          <FilterItem details="insert details" title="Insert" />
-          <FilterItem details="team details" title="Team" />
-        </Box>
+        <FilterList
+          filterItems={filterItems}
+          handleFilterItemClick={handleFilterItemClick}
+        />
       </Flex>
       <Grid
         container

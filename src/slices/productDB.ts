@@ -16,7 +16,6 @@ export const getDBItems = createAsyncThunk(
   async (userId: string | undefined, { rejectWithValue }) => {
     try {
       const response: Card[] = productDB;
-
       return response;
     } catch (err) {
       rejectWithValue((err as Error).message);
@@ -25,7 +24,7 @@ export const getDBItems = createAsyncThunk(
 );
 
 export const productDBSlice = createSlice({
-  name: "inventory",
+  name: "productDB",
   initialState,
   reducers: {
     clearDBItems: (state: ProductDB) => {
@@ -36,13 +35,9 @@ export const productDBSlice = createSlice({
       state: ProductDB,
       { payload }: PayloadAction<keyof Card>
     ) => {
-      state.status = Status["IDLE"];
+      state.status = Status["FULFILLED"];
       const uniques = getUniqueCardPropList(state.items, payload as keyof Card);
       switch (payload) {
-        case "year": {
-          state.years = uniques;
-          break;
-        }
         case "description": {
           state.descriptions = uniques as string[];
           break;
@@ -60,7 +55,7 @@ export const productDBSlice = createSlice({
           break;
         }
         case "serialNumbered": {
-          state.serialNumbered = uniques;
+          state.serialNumbered = uniques as string[];
           break;
         }
         case "setName": {
@@ -87,8 +82,13 @@ export const productDBSlice = createSlice({
           state.productNames = uniques as string[];
           break;
         }
+        case "year": {
+          state.years = uniques as string[];
+          break;
+        }
         default:
           console.log("Wrong key provided", payload);
+          break;
       }
     }
   },
