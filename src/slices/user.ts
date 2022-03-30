@@ -1,12 +1,6 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  PayloadAction,
-  CaseReducer
-} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 import { users } from "./mocks";
-
 import { Status, User, UserProps } from "@types";
 
 const initialState: UserProps = {
@@ -15,12 +9,7 @@ const initialState: UserProps = {
   data: ({} as unknown) as User
 };
 
-const clearUser: CaseReducer<UserProps> = (state) => {
-  state.status = Status["IDLE"];
-  state.data = ({} as unknown) as User;
-};
-
-const getUser = createAsyncThunk(
+export const getUser = createAsyncThunk(
   "user/getUser",
   async (userId: string, { rejectWithValue }) => {
     try {
@@ -33,7 +22,7 @@ const getUser = createAsyncThunk(
   }
 );
 
-const updateUser = createAsyncThunk(
+export const updateUser = createAsyncThunk(
   "user/updateInventoryItem",
   async (user: User, { rejectWithValue }) => {
     try {
@@ -70,11 +59,14 @@ export const removeUser = createAsyncThunk(
   }
 );
 
-export const userSlice = createSlice({
+export const { actions, reducer } = createSlice({
   name: "user",
   initialState,
   reducers: {
-    clearUser
+    clearUser: (state) => {
+      state.status = Status["IDLE"];
+      state.data = ({} as unknown) as User;
+    }
   },
   extraReducers: {
     [getUser.pending.type]: (state) => {
@@ -94,6 +86,6 @@ export const userSlice = createSlice({
   }
 });
 
-export { clearUser, getUser, updateUser };
+export const { clearUser } = actions;
 
-export default userSlice.reducer;
+export default reducer;

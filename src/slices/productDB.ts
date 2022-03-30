@@ -23,73 +23,13 @@ export const getDBItems = createAsyncThunk(
   }
 );
 
-export const productDBSlice = createSlice({
+export const { actions, reducer } = createSlice({
   name: "productDB",
   initialState,
   reducers: {
     clearDBItems: (state: ProductDB) => {
       state.status = Status["IDLE"];
       state.items = ([] as unknown) as Card[];
-    },
-    setUniqueCardPropList: (
-      state: ProductDB,
-      { payload }: PayloadAction<keyof Card>
-    ) => {
-      state.status = Status["FULFILLED"];
-      const uniques = getUniqueCardPropList(state.items, payload as keyof Card);
-      switch (payload) {
-        case "description": {
-          state.descriptions = uniques as string[];
-          break;
-        }
-        case "teamCity": {
-          state.teamCities = uniques as string[];
-          break;
-        }
-        case "teamName": {
-          state.teamNames = uniques as string[];
-          break;
-        }
-        case "memorabilia": {
-          state.memorabilia = uniques as string[];
-          break;
-        }
-        case "serialNumbered": {
-          state.serialNumbered = uniques as string[];
-          break;
-        }
-        case "setName": {
-          state.setNames = uniques as string[];
-          break;
-        }
-        case "cardThickness": {
-          state.cardThicknesses = uniques as number[];
-          break;
-        }
-        case "odds": {
-          state.odds = uniques as string[];
-          break;
-        }
-        case "genre": {
-          state.genres = uniques as string[];
-          break;
-        }
-        case "manufacturer": {
-          state.manufacturers = uniques as string[];
-          break;
-        }
-        case "productName": {
-          state.productNames = uniques as string[];
-          break;
-        }
-        case "year": {
-          state.years = uniques as string[];
-          break;
-        }
-        default:
-          console.log("Wrong key provided", payload);
-          break;
-      }
     }
   },
   extraReducers: {
@@ -110,6 +50,6 @@ export const productDBSlice = createSlice({
   }
 });
 
-export const { clearDBItems, setUniqueCardPropList } = productDBSlice.actions;
+export const { clearDBItems } = actions;
 
-export default productDBSlice.reducer;
+export default reducer;

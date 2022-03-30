@@ -14,7 +14,8 @@ const initialState: Inventory = {
   error: "",
   items: ([] as unknown) as CollectionCard[]
 };
-const getInventory = createAsyncThunk(
+
+export const getInventory = createAsyncThunk(
   "inventory/getInventory",
   async (userId: string | undefined, { rejectWithValue }) => {
     try {
@@ -27,7 +28,7 @@ const getInventory = createAsyncThunk(
   }
 );
 
-const addInventoryItem = createAsyncThunk(
+export const addInventoryItem = createAsyncThunk(
   "inventory/addInventoryItem",
   async (item: CollectionCard, { rejectWithValue }) => {
     try {
@@ -39,7 +40,19 @@ const addInventoryItem = createAsyncThunk(
   }
 );
 
-const removeInventoryItem = createAsyncThunk(
+export const updateInventoryItem = createAsyncThunk(
+  "inventory/updateInventoryItem",
+  async (item: CollectionCard, { rejectWithValue }) => {
+    try {
+      console.log("Update inventory Item", item);
+      // patch method for inventory
+    } catch (e) {
+      console.log("Add Inventory Item Status Error: ", (e as Error).message);
+    }
+  }
+);
+
+export const removeInventoryItem = createAsyncThunk(
   "inventory/removeInventoryItem",
   async (item: CollectionCard, { rejectWithValue }) => {
     try {
@@ -52,16 +65,14 @@ const removeInventoryItem = createAsyncThunk(
   }
 );
 
-const clearInventory: CaseReducer<Inventory> = (state) => {
-  state.status = Status["IDLE"];
-  state.items = ([] as unknown) as CollectionCard[];
-};
-
-export const inventorySlice = createSlice({
+export const { actions, reducer } = createSlice({
   name: "inventory",
   initialState,
   reducers: {
-    clearInventory
+    clearInventory: (state: Inventory) => {
+      state.status = Status["IDLE"];
+      state.items = ([] as unknown) as CollectionCard[];
+    }
   },
   extraReducers: {
     [getInventory.pending.type]: (state: Inventory) => {
@@ -81,6 +92,6 @@ export const inventorySlice = createSlice({
   }
 });
 
-export { clearInventory, getInventory, addInventoryItem, removeInventoryItem };
+export const { clearInventory } = actions;
 
-export default inventorySlice.reducer;
+export default reducer;

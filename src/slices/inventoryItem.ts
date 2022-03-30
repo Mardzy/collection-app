@@ -15,19 +15,6 @@ const initialState: InventoryItem = {
   item: ({} as unknown) as CollectionCard
 };
 
-const clearInventoryItem: CaseReducer<InventoryItem> = (state) => {
-  state.status = Status["IDLE"];
-  state.item = ({} as unknown) as CollectionCard;
-};
-
-const setOneInventoryItem: CaseReducer<
-  InventoryItem,
-  PayloadAction<CollectionCard>
-> = (state, { payload }) => {
-  state.status = Status["FULFILLED"];
-  state.item = payload;
-};
-
 export const getInventoryItem = createAsyncThunk(
   "inventory/getInventoryItem",
   async (id: string, { rejectWithValue }) => {
@@ -55,12 +42,18 @@ export const updateInventoryItem = createAsyncThunk(
   }
 );
 
-export const inventoryItemSlice = createSlice({
+export const { actions, reducer } = createSlice({
   name: "inventory",
   initialState,
   reducers: {
-    clearCollectionItem: clearInventoryItem,
-    setOneCollectionItem: setOneInventoryItem
+    clearInventoryItem: (state: InventoryItem) => {
+      state.status = Status["IDLE"];
+      state.item = ({} as unknown) as CollectionCard;
+    },
+    setOneInventoryItem: (state: InventoryItem, { payload }) => {
+      state.status = Status["FULFILLED"];
+      state.item = payload;
+    }
   },
   extraReducers: {
     [getInventoryItem.pending.type]: (state: InventoryItem) => {
@@ -80,5 +73,5 @@ export const inventoryItemSlice = createSlice({
   }
 });
 
-export { clearInventoryItem, setOneInventoryItem };
-export default inventoryItemSlice.reducer;
+export const { clearInventoryItem, setOneInventoryItem } = actions;
+export default reducer;

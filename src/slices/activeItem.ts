@@ -6,10 +6,7 @@ const initialState: ActiveItem = {
   id: ""
 };
 
-const {
-  reducer,
-  actions: { setActiveItem, clearActiveItem }
-} = createSlice({
+const { actions, reducer } = createSlice({
   name: "activeItem",
   initialState,
   reducers: {
@@ -22,6 +19,6 @@ const {
   }
 });
 
-export { clearActiveItem, setActiveItem };
+export const { clearActiveItem, setActiveItem } = actions;
 
 export default reducer;

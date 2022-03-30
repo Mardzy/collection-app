@@ -9,15 +9,7 @@ const initialState: Filters = {
   active: ([] as unknown) as Filters["active"]
 };
 
-const {
-  reducer,
-  actions: {
-    clearActiveFilters,
-    clearFilterItemsList,
-    setActiveFilters,
-    setFilterItemsList
-  }
-} = createSlice({
+const { actions, reducer } = createSlice({
   name: "filters",
   initialState,
   reducers: {
@@ -101,11 +93,11 @@ const {
   }
 });
 
-export {
+export const {
   clearActiveFilters,
   clearFilterItemsList,
   setActiveFilters,
   setFilterItemsList
-};
+} = actions;
 
 export default reducer;
