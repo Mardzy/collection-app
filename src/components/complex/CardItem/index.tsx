@@ -8,13 +8,13 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import { Flex } from "@components";
-import { LinkToCollectionItem } from "./components";
 
-import { CollectionCard } from "@types";
-import { useAppDispatch } from "../../../hooks";
+import { Card as CardProps, CollectionCard } from "@types";
+import { useAppDispatch } from "@hooks";
 import { setActiveItem } from "@slices";
 
-interface CardItemProps extends CollectionCard {
+interface CardItemProps {
+  card: CardProps | CollectionCard;
   shouldNavigate?: boolean;
 }
 
@@ -25,17 +25,17 @@ const imagePlaceholder = "http://placekitten.com/300/400";
  * @param props
  * @constructor
  */
-const CardItem: FC<CardItemProps> = (props) => {
+const CardItem: FC<CardItemProps> = ({ card, shouldNavigate }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   return (
     <Card sx={{ padding: "10px", paddingBottom: 0, cursor: "pointer" }}>
-      {!!props.shouldNavigate ? (
+      {!!shouldNavigate ? (
         <CardMedia
           onClick={() => {
-            dispatch(setActiveItem(props.id as string));
-            navigate(`item/${props.id}`);
+            dispatch(setActiveItem(card.id as string));
+            navigate(`item/${card.id}`);
           }}
           sx={{
             boxShadow: "2px 2px 2px 1px rgba(0,0,0,0.47)"
@@ -61,28 +61,36 @@ const CardItem: FC<CardItemProps> = (props) => {
           <TradeIcon fontSize="small" />
           <Typography color="green">{3}</Typography>
         </Flex>
-        {props.shouldNavigate ? (
-          <LinkToCollectionItem {...props}>
-            <Typography variant="body1">{props.description}</Typography>
-            {props.productName ?? (
+        {shouldNavigate ? (
+          <>
+            <Typography
+              onClick={() => {
+                dispatch(setActiveItem(card.id as string));
+                navigate(`item/${card.id}`);
+              }}
+              variant="body1"
+            >
+              {card.description}
+            </Typography>
+            {card.productName ?? (
               <Typography variant="body2" color="text.secondary">
-                {props.productName}
+                {card.productName}
               </Typography>
             )}
             <Typography variant="body2" color="text.secondary">
-              {props.setName} - {props?.cardId}
+              {card.setName} - {card?.cardId}
             </Typography>
-          </LinkToCollectionItem>
+          </>
         ) : (
           <>
-            <Typography variant="body1">{props.description}</Typography>
-            {props.productName ?? (
+            <Typography variant="body1">{card.description}</Typography>
+            {card.productName ?? (
               <Typography variant="body2" color="text.secondary">
-                {props.productName}
+                {card.productName}
               </Typography>
             )}
             <Typography variant="body2" color="text.secondary">
-              {props.setName} - {props.cardId}
+              {card.setName} - {card.cardId}
             </Typography>
           </>
         )}

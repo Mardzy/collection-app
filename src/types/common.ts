@@ -14,6 +14,7 @@ export interface Card {
   manufacturer: string;
   productName: string;
   year: string | number;
+  id: string;
 }
 
 export enum Status {

@@ -40,7 +40,7 @@ const Collection: FC<CollectionProps> = ({ inventory: { items } }) => {
           >
             {(items as CollectionCard[]).map((card: CollectionCard) => (
               <Grid key={card.id} item xs={6} sm={4} md={4} lg={2} xl={2}>
-                <CardItem shouldNavigate={true} {...card} />
+                <CardItem shouldNavigate={true} card={card} />
               </Grid>
             ))}
             {/*  load more button to integrate with fetch inventory*/}

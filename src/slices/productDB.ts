@@ -3,7 +3,6 @@ import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { productDB } from "./mocks";
 
 import { Status, ProductDB, Card } from "@types";
-import { getUniqueCardPropList } from "./utils";
 
 const initialState: ProductDB = {
   status: Status["IDLE"],

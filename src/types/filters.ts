@@ -10,4 +10,5 @@ export interface FilterItems {
 export interface Filters {
   items: FilterItems[];
   activeFilters: ReactText[];
+  results: Card[];
 }

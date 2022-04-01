@@ -14,10 +14,9 @@ import { Search as SearchIcon } from "@mui/icons-material";
 import { CardItem, FilterList, Flex, PageTitle } from "@components";
 
 import { RootState } from "@store";
-import { getDBItems } from "@slices";
-import { Card, CollectionCard, Filters, ProductDB } from "@types";
+import { getDBItems, getFilteredResults } from "@slices";
+import { Card, Filters, ProductDB } from "@types";
 import { useAppDispatch } from "@hooks";
-import { getDBItemsByKeyAndValue } from "@selectors";
 
 interface SearchProps {
   search: string;
@@ -25,10 +24,14 @@ interface SearchProps {
 }
 
 interface AddToCollectionProps {
+  filters: Filters;
   productDB: ProductDB;
 }
 
-const AddToCollection: FC<AddToCollectionProps> = ({ productDB }) => {
+const AddToCollection: FC<AddToCollectionProps> = ({
+  filters: { activeFilters, results },
+  productDB
+}) => {
   const dispatch = useAppDispatch();
 
   const filterItems: string[] = [
@@ -44,11 +47,6 @@ const AddToCollection: FC<AddToCollectionProps> = ({ productDB }) => {
 
   const { control, handleSubmit } = useForm<SearchProps>();
   const [, setSearchValue] = useState<string>("");
-  const [filterProps, setFilterProps] = useState<{
-    key: keyof Card;
-    value: string | number;
-  }>({ key: "" as keyof Card, value: "" });
-  const filterResults = getDBItemsByKeyAndValue(filterProps);
 
   // const handleChange =
   //   (panel: string) => (event: SyntheticEvent, isExpanded: boolean) => {
@@ -69,6 +67,11 @@ const AddToCollection: FC<AddToCollectionProps> = ({ productDB }) => {
     event?.stopPropagation();
     setSearchValue(search);
   };
+  useEffect(() => {
+    if (activeFilters?.length) {
+      dispatch(getFilteredResults(productDB.items));
+    }
+  }, [activeFilters]);
 
   return (
     <Flex
@@ -123,9 +126,9 @@ const AddToCollection: FC<AddToCollectionProps> = ({ productDB }) => {
         rowSpacing={2}
         mt={0.5}
       >
-        {(filterResults as CollectionCard[]).map((card: CollectionCard) => (
-          <Grid key={card.id} item xs={6} sm={4} md={4} lg={2} xl={2}>
-            <CardItem {...card} />
+        {(results as Card[]).map((card: Card, index) => (
+          <Grid key={index} item xs={6} sm={4} md={4} lg={2} xl={2}>
+            <CardItem card={card} />
           </Grid>
         ))}
         {/*  load more button to integrate with fetch inventory*/}
@@ -134,7 +137,8 @@ const AddToCollection: FC<AddToCollectionProps> = ({ productDB }) => {
   );
 };
 
-const mapStateToProps = ({ productDB }: RootState) => ({
+const mapStateToProps = ({ filters, productDB }: RootState) => ({
+  filters,
   productDB
 });
 

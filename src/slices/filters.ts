@@ -5,7 +5,8 @@ import { ReactText } from "react";
 
 const initialState: Filters = {
   items: ([] as unknown) as FilterItems[],
-  activeFilters: ([] as unknown) as Filters["activeFilters"]
+  activeFilters: ([] as unknown) as Filters["activeFilters"],
+  results: ([] as unknown) as Card[]
 };
 
 interface SetFilterItemsListProps {
@@ -28,13 +29,13 @@ const { actions, reducer } = createSlice({
       state: Filters,
       { payload }: PayloadAction<ReactText>
     ) => {
-      state.activeFilters.push(payload);
+      state.activeFilters?.push(payload);
     },
     removeActiveFilter: (
       state: Filters,
       { payload }: PayloadAction<ReactText>
     ) => {
-      state.activeFilters = state.activeFilters.filter((i) => i !== payload);
+      state.activeFilters = state.activeFilters?.filter((i) => i !== payload);
     },
     setFilterItemsList: (
       state: Filters,
@@ -53,14 +54,40 @@ const { actions, reducer } = createSlice({
       });
 
       state.items = mappedList as FilterItems[];
+    },
+    getFilteredResults: (
+      state: Filters,
+      { payload }: PayloadAction<Card[]>
+    ) => {
+      const results = payload.filter((item) => {
+        const keys = Object.keys(item);
+
+        for (let i = 0; i < keys.length; i++) {
+          const indexKey = keys[i] as keyof Card;
+          const itemValue = item[indexKey] as string;
+          const matchingValue = state.activeFilters?.find(
+            (i) => i === itemValue
+          );
+
+          if (itemValue === matchingValue && !!itemValue && !!matchingValue) {
+            return item;
+          }
+        }
+      });
+
+      return {
+        ...state,
+        results
+      };
     }
   }
 });
 
 export const {
+  addActiveFilter,
   clearActiveFilters,
   clearFilterItemsList,
-  addActiveFilter,
+  getFilteredResults,
   removeActiveFilter,
   setFilterItemsList
 } = actions;

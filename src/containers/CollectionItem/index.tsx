@@ -52,7 +52,7 @@ const CollectionItem: FC<CollectionItemProps> = ({
           flexDirection="column"
         >
           <Typography variant="h4">Collection Item</Typography>
-          <CardItem {...viewItem} />
+          <CardItem card={viewItem} />
         </Flex>
       ) : (
         <div>Loading...</div>

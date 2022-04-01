@@ -10,7 +10,6 @@ export interface CollectionCard extends Card {
   dateIncoming?: Date;
   dateOutgoing?: Date;
   status?: "for trade" | "for sale" | "exited inventory" | "personal inventory";
-  id: string | number;
   owner: string;
 }
 
