@@ -1,94 +1,58 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { Card, FilterItems, Filters } from "@types";
-import { getUniqueCardPropList } from "./utils";
-import { RootState, store } from "@store";
+import { ReactText } from "react";
 
 const initialState: Filters = {
-  items: ({} as unknown) as FilterItems,
-  active: ([] as unknown) as Filters["active"]
+  items: ([] as unknown) as FilterItems[],
+  activeFilters: ([] as unknown) as Filters["activeFilters"]
 };
+
+interface SetFilterItemsListProps {
+  filterItemKeys: string[];
+  itemList: Card[];
+}
 
 const { actions, reducer } = createSlice({
   name: "filters",
   initialState,
   reducers: {
     clearActiveFilters: (state: Filters) => {
-      state.active = [];
+      state.activeFilters = [];
     },
     clearFilterItemsList: (state: Filters) => {
-      state.items = {};
-      state.active = [];
+      state.items = [];
+      state.activeFilters = [];
     },
-    setActiveFilters: (
+    addActiveFilter: (
       state: Filters,
-      { payload }: PayloadAction<string | number>
+      { payload }: PayloadAction<ReactText>
     ) => {
-      state.active.push(payload);
+      state.activeFilters.push(payload);
+    },
+    removeActiveFilter: (
+      state: Filters,
+      { payload }: PayloadAction<ReactText>
+    ) => {
+      state.activeFilters = state.activeFilters.filter((i) => i !== payload);
     },
     setFilterItemsList: (
       state: Filters,
-      { payload }: PayloadAction<keyof Card>
+      {
+        payload: { filterItemKeys, itemList }
+      }: PayloadAction<SetFilterItemsListProps>
     ) => {
-      const { productDB }: RootState = store.getState();
-      const uniqueValues = getUniqueCardPropList(
-        productDB.items,
-        payload as keyof Card
-      );
+      const mappedList = filterItemKeys.map((key) => {
+        const newKey = key as keyof Card;
+        const filterItemValues = itemList.map((card: Card) => {
+          return card[newKey] as string | number;
+        });
 
-      switch (payload) {
-        case "description": {
-          state.items.descriptions = uniqueValues as string[];
-          break;
-        }
-        case "teamCity": {
-          state.items.teamCities = uniqueValues as string[];
-          break;
-        }
-        case "teamName": {
-          state.items.teamNames = uniqueValues as string[];
-          break;
-        }
-        case "memorabilia": {
-          state.items.memorabilia = uniqueValues as string[];
-          break;
-        }
-        case "serialNumbered": {
-          state.items.serialNumbered = uniqueValues as string[];
-          break;
-        }
-        case "setName": {
-          state.items.setNames = uniqueValues as string[];
-          break;
-        }
-        case "cardThickness": {
-          state.items.cardThicknesses = uniqueValues as number[];
-          break;
-        }
-        case "odds": {
-          state.items.odds = uniqueValues as string[];
-          break;
-        }
-        case "genre": {
-          state.items.genres = uniqueValues as string[];
-          break;
-        }
-        case "manufacturer": {
-          state.items.manufacturers = uniqueValues as string[];
-          break;
-        }
-        case "productName": {
-          state.items.productNames = uniqueValues as string[];
-          break;
-        }
-        case "year": {
-          state.items.years = uniqueValues as string[];
-          break;
-        }
-        default:
-          console.log("Wrong key provided", payload);
-          break;
-      }
+        const uniqueList: (string | number)[] = [...new Set(filterItemValues)];
+        return { key: newKey, list: uniqueList };
+      });
+
+      state.items = mappedList as FilterItems[];
     }
   }
 });
@@ -96,7 +60,8 @@ const { actions, reducer } = createSlice({
 export const {
   clearActiveFilters,
   clearFilterItemsList,
-  setActiveFilters,
+  addActiveFilter,
+  removeActiveFilter,
   setFilterItemsList
 } = actions;
 

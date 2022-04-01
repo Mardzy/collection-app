@@ -65,7 +65,7 @@ export const removeInventoryItem = createAsyncThunk(
   }
 );
 
-export const { actions, reducer } = createSlice({
+const { actions, reducer } = createSlice({
   name: "inventory",
   initialState,
   reducers: {

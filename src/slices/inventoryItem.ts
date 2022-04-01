@@ -15,7 +15,7 @@ const initialState: InventoryItem = {
   item: ({} as unknown) as CollectionCard
 };
 
-export const getInventoryItem = createAsyncThunk(
+export const getInventoryAnItem = createAsyncThunk(
   "inventory/getInventoryItem",
   async (id: string, { rejectWithValue }) => {
     try {
@@ -30,7 +30,7 @@ export const getInventoryItem = createAsyncThunk(
   }
 );
 
-export const updateInventoryItem = createAsyncThunk(
+export const updateInventoryAnItem = createAsyncThunk(
   "inventory/updateInventoryItem",
   async (item: CollectionCard, { rejectWithValue }) => {
     try {
@@ -56,17 +56,17 @@ export const { actions, reducer } = createSlice({
     }
   },
   extraReducers: {
-    [getInventoryItem.pending.type]: (state: InventoryItem) => {
+    [getInventoryAnItem.pending.type]: (state: InventoryItem) => {
       state.status = Status["PENDING"];
     },
-    [getInventoryItem.fulfilled.type]: (
+    [getInventoryAnItem.fulfilled.type]: (
       state: InventoryItem,
       { payload }: PayloadAction<CollectionCard>
     ) => {
       state.status = Status["FULFILLED"];
       state.item = payload;
     },
-    [getInventoryItem.rejected.type]: (state: InventoryItem, payload) => {
+    [getInventoryAnItem.rejected.type]: (state: InventoryItem, payload) => {
       state.status = Status["REJECTED"];
       state.error = payload.errorMessage;
     }

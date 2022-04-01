@@ -23,7 +23,7 @@ export const getDBItems = createAsyncThunk(
   }
 );
 
-export const { actions, reducer } = createSlice({
+const { actions, reducer } = createSlice({
   name: "productDB",
   initialState,
   reducers: {

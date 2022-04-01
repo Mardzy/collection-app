@@ -11,17 +11,11 @@ import {
 } from "@mui/material";
 import { Search as SearchIcon } from "@mui/icons-material";
 
-import {
-  CardItem,
-  FilterItemProps,
-  FilterList,
-  Flex,
-  PageTitle
-} from "@components";
+import { CardItem, FilterList, Flex, PageTitle } from "@components";
 
 import { RootState } from "@store";
-import { getDBItems, setUniqueCardPropList } from "@slices";
-import { Card, CollectionCard, ProductDB } from "@types";
+import { getDBItems } from "@slices";
+import { Card, CollectionCard, Filters, ProductDB } from "@types";
 import { useAppDispatch } from "@hooks";
 import { getDBItemsByKeyAndValue } from "@selectors";
 
@@ -35,32 +29,18 @@ interface AddToCollectionProps {
 }
 
 const AddToCollection: FC<AddToCollectionProps> = ({ productDB }) => {
-  const { years, manufacturers, productNames, setNames, teamNames } = productDB;
   const dispatch = useAppDispatch();
-  const filterItems: FilterItemProps[] = [
-    {
-      key: "year",
-      filterItemsList: years
-    },
-    {
-      key: "productName",
-      filterItemsList: productNames
-    },
-    {
-      key: "teamName",
-      filterItemsList: teamNames
-    },
-    {
-      key: "setName",
-      filterItemsList: setNames
-    },
-    {
-      key: "manufacturer",
-      filterItemsList: manufacturers
-    }
+
+  const filterItems: string[] = [
+    "year",
+    "productName",
+    "setName",
+    "manufacturer"
   ];
 
-  const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  useEffect(() => {
+    dispatch(getDBItems());
+  }, []);
 
   const { control, handleSubmit } = useForm<SearchProps>();
   const [, setSearchValue] = useState<string>("");
@@ -69,13 +49,6 @@ const AddToCollection: FC<AddToCollectionProps> = ({ productDB }) => {
     value: string | number;
   }>({ key: "" as keyof Card, value: "" });
   const filterResults = getDBItemsByKeyAndValue(filterProps);
-
-  const handleFilterItemClick = (key: keyof Card) => {
-    console.log("key", key);
-    dispatch(setUniqueCardPropList(key as keyof Card));
-  };
-
-  // const [, setExpanded] = useState<string | false>(false);
 
   // const handleChange =
   //   (panel: string) => (event: SyntheticEvent, isExpanded: boolean) => {
@@ -96,12 +69,6 @@ const AddToCollection: FC<AddToCollectionProps> = ({ productDB }) => {
     event?.stopPropagation();
     setSearchValue(search);
   };
-
-  useEffect(() => {
-    dispatch(getDBItems());
-  }, []);
-
-  // console.log("activeFilters: ", activeFilters);
 
   return (
     <Flex
@@ -148,10 +115,7 @@ const AddToCollection: FC<AddToCollectionProps> = ({ productDB }) => {
             )}
           />
         </FormControl>
-        <FilterList
-          filterItems={filterItems}
-          handleFilterItemClick={handleFilterItemClick}
-        />
+        <FilterList filterItemKeys={filterItems} itemList={productDB.items} />
       </Flex>
       <Grid
         container

@@ -1,4 +1,4 @@
-import { useAppSelector } from "../hooks";
+import { useAppSelector } from "@hooks";
 import { Card, ProductDB } from "@types";
 
 export const getActiveItemSelector = (id: string) =>
@@ -6,8 +6,8 @@ export const getActiveItemSelector = (id: string) =>
     items.find((item) => item.id === id)
   );
 
-export const getDBItemsPropListSelector = (prop: keyof ProductDB) =>
-  useAppSelector(({ productDB }) => productDB[prop]) as string[] | number[];
+// export const getDBItemsPropListSelector = (prop: keyof ProductDB) =>
+//   useAppSelector(({ productDB }) => productDB[prop]) as string[] | number[];
 
 export const getDBItemsByKeyAndValue = ({
   key,

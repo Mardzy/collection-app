@@ -5,7 +5,7 @@ import { Typography } from "@mui/material";
 
 import { CardItem, Flex } from "@components";
 
-import { getInventoryItem } from "@slices";
+import { getInventoryAnItem } from "@slices";
 import { RootState } from "@store";
 
 import {
@@ -13,8 +13,8 @@ import {
   CollectionCard,
   InventoryItem as CollectionItemType
 } from "@types";
-import { useAppDispatch } from "../../hooks";
-import { getActiveItemSelector } from "../../selectors";
+import { useAppDispatch } from "@hooks";
+import { getActiveItemSelector } from "@selectors";
 
 interface CollectionItemProps {
   activeItem: ActiveItem;
@@ -38,7 +38,7 @@ const CollectionItem: FC<CollectionItemProps> = ({
 
   useEffect(() => {
     if (!item.id) {
-      dispatch(getInventoryItem(params.itemId));
+      dispatch(getInventoryAnItem(params.itemId));
     }
   }, []);
 

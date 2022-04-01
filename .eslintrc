@@ -32,8 +32,8 @@
             ["@router/*","router/"],
             ["@services/*","services/"],
             ["@selectors/*","selectors/"],
-            ["@slices/*","slices/"],
             ["@store/*","store/"],
+            ["@slices/*","slices/"],
             ["@styles/*","styles/"],
             ["@theme/*","theme/"],
             ["@types/*","types/"]

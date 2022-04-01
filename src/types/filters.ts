@@ -1,21 +1,13 @@
+import { ReactText } from "react";
+
+import { Card } from "./common";
+
 export interface FilterItems {
-  descriptions?: string[];
-  teamCities?: string[];
-  teamNames?: string[];
-  rookies?: string[];
-  autos?: string[];
-  memorabilia?: string[];
-  serialNumbered?: string[];
-  setNames?: string[];
-  cardThicknesses?: number[];
-  odds?: string[];
-  genres?: string[];
-  manufacturers?: string[];
-  productNames?: string[];
-  years?: string[];
+  key: keyof Card;
+  list: (string | number)[];
 }
 
 export interface Filters {
-  items: FilterItems;
-  active: (string | number)[];
+  items: FilterItems[];
+  activeFilters: ReactText[];
 }

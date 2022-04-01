@@ -59,7 +59,7 @@ export const removeUser = createAsyncThunk(
   }
 );
 
-export const { actions, reducer } = createSlice({
+const { actions, reducer } = createSlice({
   name: "user",
   initialState,
   reducers: {
